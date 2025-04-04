@@ -3,7 +3,8 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WeatherBox from './component/WeatherBox'
 import WeatherButton from './component/WeatherButton';
-const API_KEY = import.meta.env.VITE_API_KEY
+import Loading from './component/Loading';
+const WEATHER_API_KEY = import.meta.env.VITE_API_KEY
 
 // 1. 앱이 실행되자마자 현재 위치 날씨가 보인다
 // 2. 날씨 정보에는 도시, 섭씨, 화씨, 날씨상태정보가 들어간다.
@@ -15,32 +16,50 @@ const API_KEY = import.meta.env.VITE_API_KEY
 
 function App() {
   const [weather,setWeather] =useState(null)
+  const [city,setCity]=useState("")
+  const [loading,setLoading]=useState(false)
+  const cities =[
+    "paris","new york","tokyo","seoul"
+  ]
   // 현재위치 위도 경도 받아오기
   const getCurrentLocation=()=>{
     navigator.geolocation.getCurrentPosition((position)=>{
       let lat = Math.floor(position.coords.latitude*10000)/10000
       let lon = Math.floor(position.coords.longitude*10000)/10000
-      console.log(lat,lon)
+      // console.log(lat,lon)
       getWeatherByCurrentLocation(lat,lon)
     })
   }
+  
   const getWeatherByCurrentLocation=async(lat,lon)=>{
-    let url = new URL(`http://api.weatherapi.com/v1/current.json?q=${lat},${lon}&lang=ko&key=${API_KEY}`)
+    let url = new URL(`http://api.weatherapi.com/v1/current.json?q=${lat},${lon}&lang=ko&key=${WEATHER_API_KEY}`)
+    setLoading(true)
     let res = await fetch(url)
     let data = await res.json()
     setWeather(data)
+    setLoading(false)
   }
 
+  const getWeatherByCity=async()=>{
+    let url = new URL(`http://api.weatherapi.com/v1/current.json?q=${city}&lang=ko&key=${WEATHER_API_KEY}`)
+    setLoading(true)
+    let res = await fetch(url)
+    let data = await res.json();
+    setWeather(data)
+    setLoading(false)
+  }
   useEffect(()=>{
-    getCurrentLocation()
+    city===""? getCurrentLocation():getWeatherByCity()
    
-  },[])
+  },[city])
+  
 
   return (
     <>
-    <div className='container borders'>
-      <WeatherBox weather={weather}/>
-      <WeatherButton />
+    <div className='container'>
+      <Loading loading={loading} />
+      <WeatherBox weather={weather} loading={loading}/>
+      <WeatherButton cities={cities} setCity={setCity}/>
     </div>
     </>
   )
