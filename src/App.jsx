@@ -32,7 +32,7 @@ function App() {
   }
   
   const getWeatherByCurrentLocation=async(lat,lon)=>{
-    let url = new URL(`http://api.weatherapi.com/v1/current.json?q=${lat},${lon}&lang=ko&key=${VITE_API_KEY}`)
+    let url = new URL(`https://api.weatherapi.com/v1/current.json?q=${lat},${lon}&lang=ko&key=${VITE_API_KEY}`)
     setLoading(true)
     let res = await fetch(url)
     let data = await res.json()
@@ -41,7 +41,7 @@ function App() {
   }
 
   const getWeatherByCity=async()=>{
-    let url = new URL(`http://api.weatherapi.com/v1/current.json?q=${city}&lang=ko&key=${VITE_API_KEY}`)
+    let url = new URL(`https://api.weatherapi.com/v1/current.json?q=${city}&lang=ko&key=${VITE_API_KEY}`)
     setLoading(true)
     let res = await fetch(url)
     let data = await res.json();
