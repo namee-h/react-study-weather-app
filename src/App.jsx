@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import WeatherBox from './component/WeatherBox'
 import WeatherButton from './component/WeatherButton';
 import Loading from './component/Loading';
-const WEATHER_API_KEY = import.meta.env.VITE_API_KEY
+const API_KEY = import.meta.env.VITE_API_KEY
 
 // 1. 앱이 실행되자마자 현재 위치 날씨가 보인다
 // 2. 날씨 정보에는 도시, 섭씨, 화씨, 날씨상태정보가 들어간다.
@@ -32,7 +32,7 @@ function App() {
   }
   
   const getWeatherByCurrentLocation=async(lat,lon)=>{
-    let url = new URL(`http://api.weatherapi.com/v1/current.json?q=${lat},${lon}&lang=ko&key=${WEATHER_API_KEY}`)
+    let url = new URL(`http://api.weatherapi.com/v1/current.json?q=${lat},${lon}&lang=ko&key=${API_KEY}`)
     setLoading(true)
     let res = await fetch(url)
     let data = await res.json()
@@ -41,7 +41,7 @@ function App() {
   }
 
   const getWeatherByCity=async()=>{
-    let url = new URL(`http://api.weatherapi.com/v1/current.json?q=${city}&lang=ko&key=${WEATHER_API_KEY}`)
+    let url = new URL(`http://api.weatherapi.com/v1/current.json?q=${city}&lang=ko&key=${API_KEY}`)
     setLoading(true)
     let res = await fetch(url)
     let data = await res.json();
