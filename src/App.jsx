@@ -72,7 +72,6 @@ function App() {
   }
 
   const getWeatherByCity=async()=>{
-    console.log("ccc",city)
     url = new URL(`https://api.weatherapi.com/v1/current.json?q=${city}&lang=ko&key=${VITE_API_KEY}`)
     getWeatherData(url);
   }
@@ -89,7 +88,7 @@ function App() {
       const res = await fetch(searchUrl);
       if (!res.ok) throw new Error("네트워크 응답 오류");
       const data = await res.json();
-      console.log("검색 결과:", data);
+      // console.log("검색 결과:", data);
       if (data.length === 0) {
         alert("해당하는 도시 정보가 없습니다.");
         return;

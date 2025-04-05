@@ -2,7 +2,7 @@ import React from "react";
 
 const WeatherBox = ({weather,loading}) => {
   
-  console.log("weather?",weather)  
+  // console.log("weather?",weather)  
   return <div className="weather-box">
     <div className={`weather-box-info ${loading?"hidden":""}`}>
       <div className="location-name">{weather?.location.name}</div>
