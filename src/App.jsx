@@ -113,7 +113,13 @@ function App() {
       <input 
           type="text"
           placeholder="도시 검색"
-          ref={searchInputRef} // onChange 대신 ref 사용
+          ref={searchInputRef}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault(); // 기본 폼 제출 막기
+              handleCitySearch();
+            }
+          }}
         />
         <button onClick={handleCitySearch}>🔍</button>
       </div>
