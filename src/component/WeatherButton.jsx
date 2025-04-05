@@ -11,7 +11,7 @@ const WeatherButton = ({ cities, setCity }) => {
   };
 
   return (
-    <div>
+    <div className='buttons-box'>
       <div 
         className="button-area"
         style={{ position: 'relative' }} // 이 부분은 여전히 inline으로 주어야 전체 영역이 relative가 됩니다.
