@@ -77,7 +77,9 @@ function App() {
 
   const handleCitySearch = async () => {
     const query = searchInputRef.current.value;
-    if (!query) return;
+    if (!query) 
+      alert("검색하고 싶은 도시명을 입력해주세요")
+      return;
     setLoading(true)
     const searchUrl = `https://api.weatherapi.com/v1/search.json?key=${VITE_API_KEY}&q=${query}`;
     try {
