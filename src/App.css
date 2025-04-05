@@ -53,6 +53,7 @@ body{
   border: none;
   background-color: white;
   border-radius: 24px;
+  outline: none;
 }
 .search-area>button:hover{
   scale: 1.1;
