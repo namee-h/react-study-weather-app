@@ -111,7 +111,7 @@ function App() {
 
   return (
     <>
-    <div className='container'>
+    <div className='container gowun-dodum-regular'>
       <div className='logo-area'>
         <img className='logo-img-1' src={logo} alt="로고이미지" width={200} />
         <img className='logo-img-2' src={logoIcon} alt="모바일로고이미지" width={100} />
