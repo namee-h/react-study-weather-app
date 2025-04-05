@@ -78,6 +78,7 @@ function App() {
   const handleCitySearch = async () => {
     const query = searchInputRef.current.value;
     if (!query) return;
+    setLoading(true)
     const searchUrl = `https://api.weatherapi.com/v1/search.json?key=${VITE_API_KEY}&q=${query}`;
     try {
       const res = await fetch(searchUrl);
@@ -88,17 +89,16 @@ function App() {
         alert("해당하는 도시 정보가 없습니다.");
         return;
       }
-      // 검색 결과에서 도시 이름 추출
       const newCities = data.map(item => item.name);
-      // 기존 cities 배열과 합쳐서 중복 제거
       const combinedCities = Array.from(new Set([...cities, ...newCities]));
       setCities(combinedCities);
-      // 검색 결과가 있다면, 첫 번째 도시를 현재 선택된 도시로 업데이트하여 날씨 데이터를 표시함
       if (newCities.length > 0) {
         setCity(newCities[0]);
       }
     } catch (error) {
       console.error("도시 검색 오류:", error);
+    } finally{
+      setLoading(false)
     }
   };
 
