@@ -3,6 +3,7 @@ body{
   height: 100dvh;
   background-repeat: no-repeat;
   background-size: cover;
+  overflow: hidden;
 }
 .borders{
   border: 1px solid red;
@@ -16,6 +17,35 @@ body{
   height: 100dvh;
   gap: 20px;
   position: relative;
+}
+.search-area{
+  width: 400px;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+.search-area>input{
+  outline: none;
+  padding: 10px 30px;
+  width: 100%;
+  background-color: #c2afda;
+  color: white;
+  border: 1px solid white;
+  border-radius: 12px;
+}
+.search-area>button{
+  position: absolute;
+  font-size: 24px;
+  right: 10px;
+  border: none;
+  background-color: #c2afda;
+}
+.search-area>button:hover{
+  scale: 1.1;
+  border: 1px solid white;
+  border-radius: 24px;
+  background-color: #dfbacb;
+  transition: 0.3s;
 }
 /* weather box component */
 .weather-box{
@@ -54,6 +84,27 @@ body{
 .button-area{
   display: flex;
   gap: 10px;
+  width: 400px;
+  flex-wrap: nowrap;
+  overflow-x: auto;          /* 가로 스크롤 활성화 */
+  -ms-overflow-style: none;  /* IE, Edge에서 스크롤바 숨기기 */
+  scrollbar-width: none;     /* Firefox에서 스크롤바 숨기기 */
+  padding-left: 5px;
+  padding-right: 5px;
+  border-right: 2px solid #b690ae ;
+  border-left: 2px solid #b690ae ;
+
+}
+.button-area::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Opera에서 스크롤바 숨기기 */
+}
+.arrow-follow {
+  position: absolute;
+  pointer-events: none;
+  transition: left 0.1s, top 0.1s;
+  /* 동적 값은 CSS 변수로 설정합니다. */
+  left: var(--arrow-left, 0px);
+  top: var(--arrow-top, 0px);
 }
 .button-area button:hover{
   background-color: #dfbacbb1;
@@ -61,6 +112,7 @@ body{
   border: 1px solid white;
   transition: 0.3s;
 }
+
 .button-area button:focus{
   background-color: #dfbacbb1;
   color: white;
@@ -74,6 +126,7 @@ body{
   text-align: center;
   font-weight: bold;
   color: white;
+  top: 32%;
 }
 .display-none{
   display: none;

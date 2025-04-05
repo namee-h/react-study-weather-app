@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WeatherBox from './component/WeatherBox'
@@ -18,9 +18,26 @@ function App() {
   const [weather,setWeather] =useState(null)
   const [city,setCity]=useState("")
   const [loading,setLoading]=useState(false)
-  const cities =[
-    "paris","new york","tokyo","seoul"
-  ]
+  const [cities, setCities] = useState(["paris","new york","tokyo","seoul","Hanoi"]);
+  const searchInputRef = useRef(null);
+  let url = new URL(`https://api.weatherapi.com/v1/`)
+
+  useEffect(() => {
+    const savedCities = localStorage.getItem("cities");
+    if (savedCities) {
+      setCities(JSON.parse(savedCities));
+    }
+    localStorage.clear()
+  }, []);
+
+  useEffect(()=>{
+    city===""? getCurrentLocation():getWeatherByCity()
+  },[city])
+
+  useEffect(() => {
+    
+  }, [cities]);
+
   // 현재위치 위도 경도 받아오기
   const getCurrentLocation=()=>{
     navigator.geolocation.getCurrentPosition((position)=>{
@@ -30,28 +47,57 @@ function App() {
       getWeatherByCurrentLocation(lat,lon)
     })
   }
-  
+  const getWeatherData = async (url) => {
+    try {
+      setLoading(true);
+      const res = await fetch(url);
+      // 응답이 정상적인지 체크 (res.ok가 false이면 에러 발생)
+      if (!res.ok) {
+        throw new Error(`네트워크 응답 오류: ${res.status}`);
+      }
+      const data = await res.json();
+      setWeather(data);
+    } catch (error) {
+      console.error("날씨 데이터를 가져오는 중 오류 발생:", error);
+      // 에러 메시지를 상태에 저장하거나 사용자에게 알리는 로직 추가 가능
+    } finally {
+      setLoading(false);
+    }
+  };
   const getWeatherByCurrentLocation=async(lat,lon)=>{
-    let url = new URL(`https://api.weatherapi.com/v1/current.json?q=${lat},${lon}&lang=ko&key=${VITE_API_KEY}`)
-    setLoading(true)
-    let res = await fetch(url)
-    let data = await res.json()
-    setWeather(data)
-    setLoading(false)
+    url = new URL(`https://api.weatherapi.com/v1/current.json?q=${lat},${lon}&lang=ko&key=${VITE_API_KEY}`)
+    getWeatherData(url);
   }
 
   const getWeatherByCity=async()=>{
-    let url = new URL(`https://api.weatherapi.com/v1/current.json?q=${city}&lang=ko&key=${VITE_API_KEY}`)
-    setLoading(true)
-    let res = await fetch(url)
-    let data = await res.json();
-    setWeather(data)
-    setLoading(false)
+    console.log("ccc",city)
+    url = new URL(`https://api.weatherapi.com/v1/current.json?q=${city}&lang=ko&key=${VITE_API_KEY}`)
+    getWeatherData(url);
   }
-  useEffect(()=>{
-    city===""? getCurrentLocation():getWeatherByCity()
-   
-  },[city])
+
+  const handleCitySearch = async () => {
+    const query = searchInputRef.current.value;
+    if (!query) return;
+    const searchUrl = `https://api.weatherapi.com/v1/search.json?key=${VITE_API_KEY}&q=${query}`;
+    try {
+      const res = await fetch(searchUrl);
+      if (!res.ok) throw new Error("네트워크 응답 오류");
+      const data = await res.json();
+      console.log("검색 결과:", data);
+      // 검색 결과에서 도시 이름 추출
+      const newCities = data.map(item => item.name);
+      // 기존 cities 배열과 합쳐서 중복 제거
+      const combinedCities = Array.from(new Set([...cities, ...newCities]));
+      setCities(combinedCities);
+      // 검색 결과가 있다면, 첫 번째 도시를 현재 선택된 도시로 업데이트하여 날씨 데이터를 표시함
+      if (newCities.length > 0) {
+        setCity(newCities[0]);
+      }
+    } catch (error) {
+      console.error("도시 검색 오류:", error);
+    }
+  };
+
   
 
   return (
@@ -59,6 +105,14 @@ function App() {
     <div className='container'>
       <Loading loading={loading} />
       <WeatherBox weather={weather} loading={loading}/>
+      <div className="search-area">
+      <input 
+          type="text"
+          placeholder="도시 검색"
+          ref={searchInputRef} // onChange 대신 ref 사용
+        />
+        <button onClick={handleCitySearch}>🔍</button>
+      </div>
       <WeatherButton cities={cities} setCity={setCity}/>
     </div>
     </>
