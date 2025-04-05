@@ -82,9 +82,9 @@ body{
   flex-direction: column;
   gap: 10px;
 }
-.location-name{
-  font-size: 24px;
-  font-weight: 200;
+/* 섭씨 화씨 기호 */
+h2>span{
+  font-size: 25px;
 }
 .weather-conditions{
   display: flex;
@@ -93,14 +93,20 @@ body{
 }
 .weather-conditions>img{
   position: absolute;
-  width: 120px;
-  right: -40px;
-  top: -150px;
+  width: 100px;
+  right: -20px;
+  top: -120px;
 }
 .hidden{
   visibility: hidden;
 }
-
+.wind-area{
+  display: flex;
+  justify-content: space-between;
+}
+.wind-area span{
+  font-size: 15px;
+}
 /* button component */
 .button-area{
   display: flex;
@@ -111,10 +117,9 @@ body{
   scrollbar-width: none;     /* Firefox에서 스크롤바 숨기기 */
   padding-left: 5px;
   padding-right: 5px;
-  border-right: 2px solid #b690ae ;
-  border-left: 2px solid #b690ae ;
+  border-right: 2px solid #675363bf ;
+  border-left: 2px solid #675363bf ;
   justify-content: center;
-
 }
 .button-area::-webkit-scrollbar {
   display: none;             /* Chrome, Safari, Opera에서 스크롤바 숨기기 */
