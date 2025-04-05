@@ -121,7 +121,7 @@ function App() {
       <div className="search-area">
       <input 
           type="text"
-          placeholder="도시 검색"
+          placeholder="도시를 검색해 버튼을 추가해보세요"
           ref={searchInputRef}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
