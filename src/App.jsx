@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import WeatherBox from './component/WeatherBox'
 import WeatherButton from './component/WeatherButton';
 import Loading from './component/Loading';
+import logo from "./assets/logo.png"
+import logoIcon from "./assets/logo-icon.png"
 const VITE_API_KEY = import.meta.env.VITE_API_KEY
 
 // 1. 앱이 실행되자마자 현재 위치 날씨가 보인다
@@ -111,6 +113,10 @@ function App() {
   return (
     <>
     <div className='container'>
+      <div className='logo-area'>
+        <img className='logo-img-1' src={logo} alt="로고이미지" width={200} />
+        <img className='logo-img-2' src={logoIcon} alt="모바일로고이미지" width={100} />
+      </div>
       <Loading loading={loading} />
       <WeatherBox weather={weather} loading={loading}/>
       <div className="search-area">
