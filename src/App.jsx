@@ -18,7 +18,7 @@ function App() {
   const [weather,setWeather] =useState(null)
   const [city,setCity]=useState("")
   const [loading,setLoading]=useState(false)
-  const [cities, setCities] = useState(["paris","new york","tokyo","seoul","Hanoi"]);
+  const [cities, setCities] = useState(["Paris","New York","Tokyo","Seoul"]);
   const searchInputRef = useRef(null);
   let url = new URL(`https://api.weatherapi.com/v1/`)
 
@@ -77,9 +77,10 @@ function App() {
 
   const handleCitySearch = async () => {
     const query = searchInputRef.current.value;
-    if (!query) 
-      alert("검색하고 싶은 도시명을 입력해주세요")
+    if (!query.trim()) {
+      alert("검색어를 입력해주세요.");
       return;
+    }
     setLoading(true)
     const searchUrl = `https://api.weatherapi.com/v1/search.json?key=${VITE_API_KEY}&q=${query}`;
     try {
@@ -101,6 +102,7 @@ function App() {
       console.error("도시 검색 오류:", error);
     } finally{
       setLoading(false)
+      searchInputRef.current.value = "";
     }
   };
 

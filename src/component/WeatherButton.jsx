@@ -19,17 +19,17 @@ const WeatherButton = ({ cities, setCity }) => {
         onMouseEnter={() => setShowArrow(true)}
         onMouseLeave={() => setShowArrow(false)}
       >
-        {showArrow && (
-          <span 
-            className="arrow-follow"
-            style={{
+       {cities.length >= 5 && showArrow && (
+        <span 
+           className="arrow-follow"
+           style={{
               '--arrow-left': arrowPosition.x + 10 + 'px',
               '--arrow-top': arrowPosition.y + 'px'
-            }}
+           }}
           >
-            ➡️
-          </span>
-        )}
+           ➡️
+      </span>
+       )}
         <Button onClick={() => setCity("")} variant="light">
           Current Location
         </Button>
@@ -39,9 +39,11 @@ const WeatherButton = ({ cities, setCity }) => {
           </Button>
         ))}
       </div>
-      <label className="scroll-label">
-        옆으로 스크롤 가능합니다
-      </label>
+      {cities.length >= 5 && (
+        <label className="scroll-label">
+          옆으로 스크롤 가능합니다
+        </label>
+      )}
     </div>
   );
 };
