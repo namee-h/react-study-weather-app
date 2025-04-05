@@ -84,6 +84,10 @@ function App() {
       if (!res.ok) throw new Error("네트워크 응답 오류");
       const data = await res.json();
       console.log("검색 결과:", data);
+      if (data.length === 0) {
+        alert("해당하는 도시 정보가 없습니다.");
+        return;
+      }
       // 검색 결과에서 도시 이름 추출
       const newCities = data.map(item => item.name);
       // 기존 cities 배열과 합쳐서 중복 제거
