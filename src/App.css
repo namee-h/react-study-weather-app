@@ -27,6 +27,9 @@ body{
   display: flex;
   justify-content: center;
 }
+.logo-area{
+  width: 100%;
+}
 .logo-img-2{
   display: none;
 }
@@ -179,6 +182,10 @@ h2>span{
     width: 350px;
     padding: 0;
     justify-content: flex-start;
+  }
+  .logo-area{
+    display: flex;
+    justify-content: center;
   }
   .logo-img-1{
     display: none;
